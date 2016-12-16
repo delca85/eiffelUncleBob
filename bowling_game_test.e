@@ -13,6 +13,7 @@ class
 inherit
 	EQA_TEST_SET
 	 redefine on_prepare end
+
 feature {NONE} -- Events and private methods
 	game: GAME
 		-- game instance
@@ -53,7 +54,7 @@ feature {NONE} -- Events and private methods
 feature -- Test routines
 
 	testGutterGame
-			-- New test routine
+			-- test score works rightly when 0 happens in each frame
 		note
 			testing:  "covers/{GAME}.score"
 		do
@@ -63,7 +64,7 @@ feature -- Test routines
 		end
 
 	testAllOnes
-			-- New test routine
+			-- test score works rightly when 1 happens in each frame
 		note
 			testing:  "covers/{GAME}.score"
 		do
@@ -73,7 +74,7 @@ feature -- Test routines
 		end
 
 	testOneSpare
-			-- Test score works right when spare happens
+			-- Test score works rightly when spare happens
 		note
 			testing:  "covers/{GAME}.score"
 		do
@@ -85,7 +86,7 @@ feature -- Test routines
 		end
 
 	testOneStrike
-			-- Test score works right when strike happens
+			-- Test score works rightly when strike happens
 		note
 			testing:  "covers/{GAME}.score"
 		do
@@ -98,7 +99,7 @@ feature -- Test routines
 		end
 
 	testPerfectGame
-			-- Test score works right when perfect game happens
+			-- Test score works rightly when perfect game happens
 		note
 			testing:  "covers/{GAME}.score"
 		do
@@ -108,7 +109,7 @@ feature -- Test routines
 		end
 
 	testLastSpare
-			-- Test score works right when a spare happens at the last frame
+			-- Test score works rightly when a spare happens at the last frame
 		note
 			testing:  "covers/{GAME}.score"
 		do

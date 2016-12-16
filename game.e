@@ -17,7 +17,6 @@ feature -- Initialization
 	make
 			-- Run application.
 		do
-			--| Add your code here
 			create rolls.make
 		end
 

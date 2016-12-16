@@ -31,15 +31,12 @@ feature -- Basic Operations
 
     roll (pins: INTEGER)
             -- pins gone down at this roll
-        do
+    require
+    	pins >= 0
+	do
             current_roll := current_roll + 1
             rolls.put_i_th(pins, current_roll)
-            require
-            	pins >= 0
-            ensure
-            	
-
-        end
+    end
 
     score: INTEGER
     		-- compute points earned
@@ -104,5 +101,8 @@ feature {NONE} --private feature
 		do
 			Result:= rolls.i_th(frameIndex) + rolls.i_th(frameIndex+1)
 		end
+
+	invariant
+		consistent_current_roll: current_roll >= 0
 end
 
