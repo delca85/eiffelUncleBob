@@ -30,7 +30,7 @@ feature {NONE} -- Events and private methods
 			i: INTEGER
 		do
 			from
-				i:= 0
+				i:= 1
 			until
 				i >= n
 			loop
