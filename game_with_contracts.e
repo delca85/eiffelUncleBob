@@ -27,15 +27,53 @@ feature {NONE} -- Fields
     current_roll: INTEGER
             -- number of roll playing at this moment
 
+    score_field: INTEGER
+    		-- final score
+
+feature {NONE} -- Private methods
+
+	rollMany(n: INTEGER; pins: INTEGER)
+		-- roll the same number of pins in sequential frame
+		local
+			i: INTEGER
+		do
+			from
+				i:= 0
+			until
+				i >= n
+			loop
+				roll(pins)
+			end
+		end
+
+	rollSpare
+		-- make a spare happens
+		do
+			roll(5)
+			roll(5)
+		end
+
+	rollStrike
+		-- make a strike happens
+		do
+			roll(10)
+		end
+
+
 feature -- Basic Operations
 
     roll (pins: INTEGER)
             -- pins gone down at this roll
     require
     	pins >= 0
+
 	do
             current_roll := current_roll + 1
-            rolls.put_i_th(pins, current_roll)
+            rolls.extend(pins)
+
+    ensure
+    	updated_roll_series: rolls.at(current_roll) = pins
+    	updated_current_roll: current_roll = old current_roll + 1
     end
 
     score: INTEGER
@@ -45,6 +83,7 @@ feature -- Basic Operations
     		frameIndex: INTEGER
     		frame: INTEGER
     	do
+    		frameIndex := 1
     		from
                 frame := 0
             until
@@ -61,7 +100,10 @@ feature -- Basic Operations
                 	frameIndex := frameIndex + 2
                 end
             end
+            score_field := score_field
 			Result := scoreValue
+		ensure
+
     	end
 
 
@@ -71,7 +113,7 @@ feature {NONE} --private feature
 		local
 			strike: BOOLEAN
 		do
-			strike := rolls.i_th(frameIndex) = 10
+			strike := rolls.at(frameIndex) = 10
 			Result:= strike
 		end
 
@@ -80,29 +122,29 @@ feature {NONE} --private feature
 		local
 			spare: BOOLEAN
 		do
-			spare := rolls.i_th(frameIndex) + rolls.i_th(frameIndex+1) = 10
+			spare := rolls.at(frameIndex) + rolls.at(frameIndex+1) = 10
 			Result:= spare
 		end
 
 	strikeBonus (frameIndex: INTEGER): INTEGER
 		-- compute strike bonus in a specific frame
 		do
-			Result:= 10 + rolls.i_th(frameIndex+1) + rolls.i_th(frameIndex+2)
+			Result:= 10 + rolls.at(frameIndex+1) + rolls.at(frameIndex+2)
 		end
 
 	spareBonus (frameIndex: INTEGER): INTEGER
 		-- compute spare bonus in a specific frame
 		do
-			Result:= 10 + rolls.i_th(frameIndex+2)
+			Result:= 10 + rolls.at(frameIndex+2)
 		end
 
 	simpleFrame (frameIndex: INTEGER): INTEGER
 		-- compute points in a specific frame when neither strike neither spare happened
 		do
-			Result:= rolls.i_th(frameIndex) + rolls.i_th(frameIndex+1)
+			Result:= rolls.at(frameIndex) + rolls.at(frameIndex+1)
 		end
 
 	invariant
-		consistent_current_roll: current_roll >= 0
+		consistent_current_roll: current_roll < 22
 end
 

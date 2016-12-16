@@ -18,7 +18,7 @@ feature -- Initialization
 			game: GAME_WITH_CONTRACTS
 		do
 			create game.make
-			game.roll(-1)
+			game.roll(1)
 		end
 
 end

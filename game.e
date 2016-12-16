@@ -34,7 +34,7 @@ feature -- Basic Operations
             -- pins gone down at this roll
         do
             current_roll := current_roll + 1
-            rolls.put_i_th(pins, current_roll)
+            rolls.extend(pins)
         end
 
     score: INTEGER
@@ -44,6 +44,7 @@ feature -- Basic Operations
     		frameIndex: INTEGER
     		frame: INTEGER
     	do
+    		frameIndex := 1
     		from
                 frame := 0
             until
@@ -70,7 +71,7 @@ feature {NONE} --private feature
 		local
 			strike: BOOLEAN
 		do
-			strike := rolls.i_th(frameIndex) = 10
+			strike := rolls.at(frameIndex) = 10
 			Result:= strike
 		end
 
@@ -79,26 +80,26 @@ feature {NONE} --private feature
 		local
 			spare: BOOLEAN
 		do
-			spare := rolls.i_th(frameIndex) + rolls.i_th(frameIndex+1) = 10
+			spare := rolls.at(frameIndex) + rolls.at(frameIndex+1) = 10
 			Result:= spare
 		end
 
 	strikeBonus (frameIndex: INTEGER): INTEGER
 		-- compute strike bonus in a specific frame
 		do
-			Result:= 10 + rolls.i_th(frameIndex+1) + rolls.i_th(frameIndex+2)
+			Result:= 10 + rolls.at(frameIndex+1) + rolls.at(frameIndex+2)
 		end
 
 	spareBonus (frameIndex: INTEGER): INTEGER
 		-- compute spare bonus in a specific frame
 		do
-			Result:= 10 + rolls.i_th(frameIndex+2)
+			Result:= 10 + rolls.at(frameIndex+2)
 		end
 
 	simpleFrame (frameIndex: INTEGER): INTEGER
 		-- compute points in a specific frame when neither strike neither spare happened
 		do
-			Result:= rolls.i_th(frameIndex) + rolls.i_th(frameIndex+1)
+			Result:= rolls.at(frameIndex) + rolls.at(frameIndex+1)
 		end
 
 end
