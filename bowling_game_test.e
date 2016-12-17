@@ -59,8 +59,7 @@ feature -- Test routines
 			testing:  "covers/{GAME}.score"
 		do
 			rollMany(20, 0)
-			ensure
-				game.score = 0
+			assert("Score is not zero", game.score = 0)
 		end
 
 	testAllOnes
@@ -69,8 +68,7 @@ feature -- Test routines
 			testing:  "covers/{GAME}.score"
 		do
 			rollMany(20, 1)
-			ensure
-				game.score = 20
+			assert("Score is not 20", game.score = 20)
 		end
 
 	testOneSpare
@@ -81,8 +79,7 @@ feature -- Test routines
 			rollSpare
 			game.roll(3)
 			rollMany(17, 0)
-			ensure
-				game.score = 16
+			assert("Score is not 16", game.score = 16)
 		end
 
 	testOneStrike
@@ -94,8 +91,7 @@ feature -- Test routines
 			game.roll(3)
 			game.roll(4)
 			rollMany(17, 0)
-			ensure
-				game.score = 24
+			assert("Score is not 24", game.score = 24)
 		end
 
 	testPerfectGame
@@ -104,8 +100,7 @@ feature -- Test routines
 			testing:  "covers/{GAME}.score"
 		do
 			rollMany(12, 10)
-			ensure
-				game.score = 300
+			assert("Score is not 300", game.score = 300)
 		end
 
 	testLastSpare
