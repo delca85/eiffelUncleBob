@@ -80,7 +80,7 @@ feature -- Test routines
 			rollSpare
 			game.roll(3)
 			rollMany(17, 0)
-			assert("Score is not 16", game.score = 16)
+			assert("Score is not 16, but is " + game.score.out, game.score = 16)
 		end
 
 	testOneStrike
@@ -92,7 +92,7 @@ feature -- Test routines
 			game.roll(3)
 			game.roll(4)
 			rollMany(16, 0)
-			assert("Score is not 24", game.score = 24)
+			assert("Score is not 24, but is " + game.score.out, game.score = 24)
 		end
 
 	testPerfectGame
@@ -101,7 +101,7 @@ feature -- Test routines
 			testing:  "covers/{GAME}.score"
 		do
 			rollMany(12, 10)
-			assert("Score is not 300", game.score = 300)
+			assert("Score is not 300, but is " + game.score.out, game.score = 300)
 		end
 
 	testLastSpare
@@ -112,8 +112,7 @@ feature -- Test routines
 			rollMany(9, 10)
 			rollSpare
 			game.roll(10)
-			ensure
-				game.score = 275
+			assert("Score is not 275, but is " + game.score.out, game.score = 275)
 		end
 end
 
