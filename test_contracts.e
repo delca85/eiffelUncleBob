@@ -11,14 +11,29 @@ create
 	make
 
 feature -- Initialization
+	game: GAME_WITH_CONTRACTS
 
 	make
 			-- Run application.
-		local
-			game: GAME_WITH_CONTRACTS
 		do
 			create game.make
-			game.roll(1)
+			rollMany(20, 2)
+			io.putint(game.score); io.put_new_line
+		end
+
+	rollMany(n: INTEGER; pins: INTEGER)
+		-- roll the same number of pins in sequential frame
+		local
+			i: INTEGER
+		do
+			from
+				i:= 0
+			until
+				i >= n
+			loop
+				game.roll(pins)
+				i := i+1
+			end
 		end
 
 end

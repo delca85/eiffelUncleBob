@@ -1,5 +1,5 @@
 note
-	description: "UncleBob application root class"
+	description: "Bowling game class"
 	date: "$Date$"
 	revision: "$Revision$"
 
