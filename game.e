@@ -25,15 +25,11 @@ feature {NONE} -- Fields
     rolls: LINKED_LIST[INTEGER]
             -- rolls in a game
 
-    current_roll: INTEGER
-            -- number of roll playing at this moment
-
 feature -- Basic Operations
 
     roll (pins: INTEGER)
             -- pins gone down at this roll
         do
-            current_roll := current_roll + 1
             rolls.extend(pins)
         end
 
@@ -48,7 +44,7 @@ feature -- Basic Operations
     		from
                 frame := 0
             until
-                frame >= 10
+                frame > 10
             loop
                 if isStrike(frameIndex) then
                 	scoreValue := scoreValue + strikeBonus(frameIndex)
@@ -60,6 +56,7 @@ feature -- Basic Operations
                 	scoreValue := scoreValue + simpleFrame(frameIndex)
                 	frameIndex := frameIndex + 2
                 end
+                frame := frame + 1
             end
 			Result := scoreValue
     	end
@@ -71,7 +68,9 @@ feature {NONE} --private feature
 		local
 			strike: BOOLEAN
 		do
-			strike := rolls.at(frameIndex) = 10
+			if frameIndex <= rolls.count   then
+				strike := rolls.at(frameIndex) = 10
+			end
 			Result:= strike
 		end
 
@@ -80,26 +79,42 @@ feature {NONE} --private feature
 		local
 			spare: BOOLEAN
 		do
-			spare := rolls.at(frameIndex) + rolls.at(frameIndex+1) = 10
+			if frameIndex + 1 <= rolls.count then
+				spare := rolls.at(frameIndex) + rolls.at(frameIndex+1) = 10
+			end
 			Result:= spare
 		end
 
 	strikeBonus (frameIndex: INTEGER): INTEGER
 		-- compute strike bonus in a specific frame
 		do
-			Result:= 10 + rolls.at(frameIndex+1) + rolls.at(frameIndex+2)
+			if frameIndex + 2 <= rolls.count then
+				Result:= 10 + rolls.at(frameIndex+1) + rolls.at(frameIndex+2)
+			else
+				Result := 0
+			end
 		end
 
 	spareBonus (frameIndex: INTEGER): INTEGER
 		-- compute spare bonus in a specific frame
 		do
-			Result:= 10 + rolls.at(frameIndex+2)
+			if frameIndex + 2 <= rolls.count then
+				Result:= 10 + rolls.at(frameIndex+2)
+			else
+				Result := 0
+			end
+
 		end
 
 	simpleFrame (frameIndex: INTEGER): INTEGER
 		-- compute points in a specific frame when neither strike neither spare happened
 		do
-			Result:= rolls.at(frameIndex) + rolls.at(frameIndex+1)
+			if frameIndex + 1 <= rolls.count then
+				Result:= rolls.at(frameIndex) + rolls.at(frameIndex+1)
+			else
+				Result := 0
+			end
+
 		end
 
 end

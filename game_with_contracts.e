@@ -62,6 +62,7 @@ feature {NONE} -- Private methods
 
 feature -- Basic Operations
 
+
     roll (pins: INTEGER)
             -- pins gone down at this roll
     require
@@ -72,7 +73,7 @@ feature -- Basic Operations
             rolls.extend(pins)
 
     ensure
-    	updated_roll_series: rolls.at(current_roll) = pins
+    	updated_roll_series: rolls.last = pins
     	updated_current_roll: current_roll = old current_roll + 1
     end
 
@@ -143,8 +144,5 @@ feature {NONE} --private feature
 		do
 			Result:= rolls.at(frameIndex) + rolls.at(frameIndex+1)
 		end
-
-	invariant
-		consistent_current_roll: current_roll < 22
 end
 

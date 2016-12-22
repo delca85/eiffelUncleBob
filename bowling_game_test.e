@@ -30,11 +30,12 @@ feature {NONE} -- Events and private methods
 			i: INTEGER
 		do
 			from
-				i:= 1
+				i:= 0
 			until
 				i >= n
 			loop
 				game.roll(pins)
+				i := i+1
 			end
 		end
 
@@ -68,7 +69,7 @@ feature -- Test routines
 			testing:  "covers/{GAME}.score"
 		do
 			rollMany(20, 1)
-			assert("Score is not 20", game.score = 20)
+			assert("Score is not 20, but is " + game.score.out , game.score = 20)
 		end
 
 	testOneSpare
@@ -90,7 +91,7 @@ feature -- Test routines
 			rollStrike
 			game.roll(3)
 			game.roll(4)
-			rollMany(17, 0)
+			rollMany(16, 0)
 			assert("Score is not 24", game.score = 24)
 		end
 
@@ -109,7 +110,7 @@ feature -- Test routines
 			testing:  "covers/{GAME}.score"
 		do
 			rollMany(9, 10)
-			rollSpare()
+			rollSpare
 			game.roll(10)
 			ensure
 				game.score = 275
