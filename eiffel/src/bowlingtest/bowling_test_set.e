@@ -28,6 +28,10 @@ feature {NONE} -- Events
 		end
 
 	roll_many (times: INTEGER; pins: INTEGER)
+		require
+			valid_roll: 0 <= pins and pins <= 10
+			valid_times: times > 0
+			not g.ended
 		do
 			across
 				1 |..| times as r
@@ -37,12 +41,16 @@ feature {NONE} -- Events
 		end
 
 	roll_spare
+		require
+			not g.ended
 		do
 			g.roll (5)
 			g.roll (5)
 		end
 
 	roll_strike
+		require
+			not g.ended
 		do
 			g.roll (10)
 		end
@@ -79,9 +87,9 @@ feature -- Test routines
 		end
 
 	test_perfect_game
-	do
-		roll_many (12, 10)
-		assert("Score is not three hundreds: " + g.score.out, g.score = 300)
-	end
+		do
+			roll_many (12, 10)
+			assert ("Score is not three hundreds: " + g.score.out, g.score = 300)
+		end
 
 end
