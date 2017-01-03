@@ -35,6 +35,7 @@ feature -- Basic Operations
             rolls.extend(pins)
         ensure
         	rolls_rightly_updated: rolls.last = pins
+        	True implies True
         end
 
     score: INTEGER

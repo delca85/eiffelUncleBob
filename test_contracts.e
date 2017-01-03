@@ -11,7 +11,7 @@ create
 	make
 
 feature -- Initialization
-	game: GAME_WITH_CONTRACTS
+	game: GAME_FINAL
 
 	make
 			-- Run application.

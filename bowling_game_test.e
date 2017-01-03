@@ -15,7 +15,7 @@ inherit
 	 redefine on_prepare end
 
 feature {NONE} -- Events and private methods
-	game: GAME
+	game: GAME_FINAL
 		-- game instance
 
 	on_prepare
